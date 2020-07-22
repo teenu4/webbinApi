@@ -1,6 +1,6 @@
-class CreateScreens < ActiveRecord::Migration[6.0]
+class CreateImages < ActiveRecord::Migration[6.0]
   def change
-    create_table :screens do |t|
+    create_table :images do |t|
       t.boolean :mobile_attached
       t.boolean :desktop_attached
       t.boolean :tablet_attached

@@ -6,6 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Screen.create(mobile_attached: true, desktop_attached: true )
+Image.create(mobile_attached: true, desktop_attached: true )
 Element.create(name: 'Elem 1')
 Element.create(name: 'EL2')

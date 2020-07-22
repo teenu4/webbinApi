@@ -1,6 +1,6 @@
 class Element < ApplicationRecord
-  has_many :screens_elements#, dependent: :delete_all
-  has_many :screens, through: :screens_elements
+  has_many :images_elements#, dependent: :delete_all
+  has_many :images, through: :images_elements
   before_save :set_tag
 
   def set_tag

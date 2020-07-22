@@ -8,10 +8,10 @@ module Types
       Element.all
     end
 
-    field :screens, [Types::ScreenType], null: false
+    field :images, [Types::ImageType], null: false
 
-    def screens
-      Screen.all
+    def images
+      Image.all
     end
   end
 end

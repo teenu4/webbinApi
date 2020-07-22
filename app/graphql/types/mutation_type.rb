@@ -3,7 +3,7 @@ module Types
 
     field :create_element, mutation: Mutations::Elements::CreateElement
 
-    field :update_screen, mutation: Mutations::Screens::UpdateScreen
+    field :update_image, mutation: Mutations::Images::UpdateImage
 
     # TODO: remove me
     field :test_field, String, null: false,

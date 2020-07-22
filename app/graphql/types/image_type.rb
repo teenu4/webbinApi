@@ -1,5 +1,5 @@
 module Types
-  class ScreenType < Types::BaseObject
+  class ImageType < Types::BaseObject
     field :id, ID, null: false
     field :mobile_attached, Boolean, null: true
     field :desktop_attached, Boolean, null: true

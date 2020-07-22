@@ -1,6 +1,6 @@
-class Screen < ApplicationRecord
-  has_many :screens_elements#, dependent: :delete_all
-  has_many :elements, through: :screens_elements
+class Image < ApplicationRecord
+  has_many :images_elements#, dependent: :delete_all
+  has_many :elements, through: :images_elements
   before_save :set_platforms_info
 
   PLATFORMS = %w[mobile desktop tablet]

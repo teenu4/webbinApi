@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_090152) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "screens", force: :cascade do |t|
+  create_table "images", force: :cascade do |t|
     t.boolean "mobile_attached"
     t.boolean "desktop_attached"
     t.boolean "tablet_attached"
@@ -32,13 +32,13 @@ ActiveRecord::Schema.define(version: 2020_07_18_090152) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "screens_elements", force: :cascade do |t|
-    t.bigint "screen_id"
+  create_table "images_elements", force: :cascade do |t|
+    t.bigint "image_id"
     t.bigint "element_id"
     t.datetime "created_at", null: false
-    t.index ["element_id"], name: "index_screens_elements_on_element_id"
-    t.index ["screen_id", "element_id"], name: "index_screens_elements_on_screen_id_and_element_id"
-    t.index ["screen_id"], name: "index_screens_elements_on_screen_id"
+    t.index ["element_id"], name: "index_images_elements_on_element_id"
+    t.index ["image_id", "element_id"], name: "index_images_elements_on_image_id_and_element_id"
+    t.index ["image_id"], name: "index_images_elements_on_image_id"
   end
 
 end
