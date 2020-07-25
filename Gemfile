@@ -44,3 +44,7 @@ gem 'pg'
 gem 'graphql'
 # cors to use non-rails clients
 gem 'rack-cors'
+# users
+gem 'devise'
+# ActiveAdmin
+gem 'activeadmin'

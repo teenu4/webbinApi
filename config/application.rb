@@ -44,5 +44,10 @@ module WebbinApi
         resource '*', headers: :any, methods: [:get, :post, :options]
       end
     end
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use Rack::MethodOverride
+    config.middleware.use ActionDispatch::Flash
+
   end
 end

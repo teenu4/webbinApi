@@ -4,6 +4,6 @@ class Element < ApplicationRecord
   before_save :set_tag
 
   def set_tag
-    self.tag = name.to_s.downcase.gsub(' ', '_')
+    self.tag = name.to_s.strip.downcase.gsub(' ', '_')
   end
 end
