@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_111648) do
+ActiveRecord::Schema.define(version: 2020_07_26_122950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,11 +62,35 @@ ActiveRecord::Schema.define(version: 2020_07_25_111648) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "websites_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "elements", force: :cascade do |t|
     t.string "name"
     t.string "tag"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "flows", force: :cascade do |t|
+    t.string "name"
+    t.datetime "last_update"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "patterns_count", default: 0
+  end
+
+  create_table "flows_patterns", force: :cascade do |t|
+    t.bigint "flow_id"
+    t.bigint "pattern_id"
+    t.datetime "created_at", null: false
+    t.index ["flow_id", "pattern_id"], name: "index_flows_patterns_on_flow_id_and_pattern_id"
+    t.index ["flow_id"], name: "index_flows_patterns_on_flow_id"
+    t.index ["pattern_id"], name: "index_flows_patterns_on_pattern_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -86,6 +110,28 @@ ActiveRecord::Schema.define(version: 2020_07_25_111648) do
     t.index ["element_id"], name: "index_images_elements_on_element_id"
     t.index ["image_id", "element_id"], name: "index_images_elements_on_image_id_and_element_id"
     t.index ["image_id"], name: "index_images_elements_on_image_id"
+  end
+
+  create_table "patterns", force: :cascade do |t|
+    t.string "name"
+    t.string "tag"
+    t.bigint "image_id"
+    t.bigint "website_id"
+    t.datetime "last_update"
+    t.integer "flows_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["image_id"], name: "index_patterns_on_image_id"
+    t.index ["website_id"], name: "index_patterns_on_website_id"
+  end
+
+  create_table "websites", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.bigint "category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_websites_on_category_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
