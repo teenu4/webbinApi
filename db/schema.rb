@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_26_122950) do
+ActiveRecord::Schema.define(version: 2020_07_26_202037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,16 +81,16 @@ ActiveRecord::Schema.define(version: 2020_07_26_122950) do
     t.datetime "last_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "patterns_count", default: 0
+    t.integer "images_count", default: 0
   end
 
-  create_table "flows_patterns", force: :cascade do |t|
+  create_table "flows_images", force: :cascade do |t|
     t.bigint "flow_id"
-    t.bigint "pattern_id"
+    t.bigint "image_id"
     t.datetime "created_at", null: false
-    t.index ["flow_id", "pattern_id"], name: "index_flows_patterns_on_flow_id_and_pattern_id"
-    t.index ["flow_id"], name: "index_flows_patterns_on_flow_id"
-    t.index ["pattern_id"], name: "index_flows_patterns_on_pattern_id"
+    t.index ["flow_id", "image_id"], name: "index_flows_images_on_flow_id_and_image_id"
+    t.index ["flow_id"], name: "index_flows_images_on_flow_id"
+    t.index ["image_id"], name: "index_flows_images_on_image_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -101,6 +101,10 @@ ActiveRecord::Schema.define(version: 2020_07_26_122950) do
     t.integer "elements_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "flows_count", default: 0
+    t.integer "patterns_count", default: 0
+    t.integer "website_id"
+    t.string "name"
   end
 
   create_table "images_elements", force: :cascade do |t|
@@ -112,17 +116,20 @@ ActiveRecord::Schema.define(version: 2020_07_26_122950) do
     t.index ["image_id"], name: "index_images_elements_on_image_id"
   end
 
+  create_table "images_patterns", force: :cascade do |t|
+    t.bigint "image_id"
+    t.bigint "pattern_id"
+    t.datetime "created_at", null: false
+    t.index ["image_id", "pattern_id"], name: "index_images_patterns_on_image_id_and_pattern_id"
+    t.index ["image_id"], name: "index_images_patterns_on_image_id"
+    t.index ["pattern_id"], name: "index_images_patterns_on_pattern_id"
+  end
+
   create_table "patterns", force: :cascade do |t|
     t.string "name"
     t.string "tag"
-    t.bigint "image_id"
-    t.bigint "website_id"
-    t.datetime "last_update"
-    t.integer "flows_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["image_id"], name: "index_patterns_on_image_id"
-    t.index ["website_id"], name: "index_patterns_on_website_id"
   end
 
   create_table "websites", force: :cascade do |t|

@@ -3,11 +3,13 @@ ActiveAdmin.register Image do
   index do
     selectable_column
     id_column
+    column :name
     column :mobile_attached
     column :desktop_attached
     column :tablet_attached
     column :platforms_count
     column :elements_count
+    column :patterns_count
     actions
   end
 
@@ -20,14 +22,16 @@ ActiveAdmin.register Image do
     default_main_content
   end
 
-  permit_params :mobile_file, :desktop_file, :tablet_file,
+  permit_params :mobile_file, :desktop_file, :tablet_file, :name, :website_id,
                 images_elements_attributes: %i[id image_id element_id _destroy],
-                patterns_attributes: %i[id image_id name website_id]
+                images_patterns_attributes: %i[id image_id pattern_id _destroy]
   form do |f|
     f.inputs do
+      f.input :name
       f.input :mobile_file, as: :file
       f.input :desktop_file, as: :file
       f.input :tablet_file, as: :file
+      f.input :website_id, as: :select, collection: Website.all.pluck(:name, :id)
     end
 
     f.inputs 'Elements' do
@@ -39,10 +43,10 @@ ActiveAdmin.register Image do
     end
 
     f.inputs "Patterns" do
-      f.has_many :patterns,
+      f.has_many :images_patterns,
                  allow_destroy: true do |p|
-        p.input :name
-        p.input :website_id, as: :select, collection: Website.all.pluck(:name, :id)
+        p.input :image_id, as: :hidden
+        p.input :pattern_id, as: :select, collection: Pattern.all.pluck(:name, :id)
       end
     end
     f.actions

@@ -48,3 +48,6 @@ gem 'rack-cors'
 gem 'devise'
 # ActiveAdmin
 gem 'activeadmin'
+# image editing
+gem 'image_processing'
+gem 'mini_magick'

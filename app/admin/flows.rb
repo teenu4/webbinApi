@@ -1,21 +1,21 @@
 ActiveAdmin.register Flow do
 
   permit_params :name,
-                flows_patterns_attributes: %i[id flow_id pattern_id _destroy]
+                flows_images_attributes: %i[id flow_id image_id _destroy]
 
   index do
     selectable_column
     id_column
     column :name
     column :last_update
-    column :patterns_count
+    column :images_count
     actions
   end
 
   show do
 
     def default_attribute_table_rows
-      active_admin_config.resource_columns.append :patterns_count, :patterns
+      active_admin_config.resource_columns.append :images
     end
 
     default_main_content
@@ -27,10 +27,10 @@ ActiveAdmin.register Flow do
     end
 
     f.inputs 'Flow Steps' do
-      f.has_many :flows_patterns,
+      f.has_many :flows_images,
                  allow_destroy: true do |s|
         s.input :flow_id, as: :hidden
-        s.input :pattern_id, as: :select, collection: Pattern.all.pluck(:name, :id)
+        s.input :image, as: :select, collection: Image.all.map{|i| [i.active_admin_title,i.id]}
       end
     end
     actions

@@ -11,3 +11,6 @@ module Helpers
     end
   end
 end
+# flows has images
+# patterns as elements
+# image has website

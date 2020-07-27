@@ -1,5 +1,5 @@
 class Flow < ApplicationRecord
-  has_many :flows_patterns
-  has_many :patterns, through: :flows_patterns
-  accepts_nested_attributes_for :flows_patterns, allow_destroy: true
+  has_many :flows_images
+  has_many :images, through: :flows_images
+  accepts_nested_attributes_for :flows_images, allow_destroy: true
 end
