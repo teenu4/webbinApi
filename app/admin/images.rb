@@ -14,6 +14,9 @@ ActiveAdmin.register Image do
   end
 
   show do
+    div do
+      img("SRC" => image.preview_url, style: "display: block; margin-left: auto;margin-right: auto;width: 50%;")
+    end
 
     def default_attribute_table_rows
       active_admin_config.resource_columns.append :platforms_count, :elements_count, :patterns, :elements

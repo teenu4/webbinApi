@@ -51,3 +51,5 @@ gem 'activeadmin'
 # image editing
 gem 'image_processing'
 gem 'mini_magick'
+# advanced service objects
+gem 'interactor', '~> 3.0'
