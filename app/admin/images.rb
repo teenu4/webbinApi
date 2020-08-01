@@ -4,6 +4,7 @@ ActiveAdmin.register Image do
     selectable_column
     id_column
     column :name
+    column :position
     column :mobile_attached
     column :desktop_attached
     column :tablet_attached
@@ -25,12 +26,13 @@ ActiveAdmin.register Image do
     default_main_content
   end
 
-  permit_params :mobile_file, :desktop_file, :tablet_file, :name, :website_id,
+  permit_params :mobile_file, :desktop_file, :tablet_file, :name, :website_id, :position,
                 images_elements_attributes: %i[id image_id element_id _destroy],
                 images_patterns_attributes: %i[id image_id pattern_id _destroy]
   form do |f|
     f.inputs do
       f.input :name
+      f.input :position
       f.input :mobile_file, as: :file
       f.input :desktop_file, as: :file
       f.input :tablet_file, as: :file

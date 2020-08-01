@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_26_202037) do
+ActiveRecord::Schema.define(version: 2020_08_01_155649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2020_07_26_202037) do
     t.integer "patterns_count", default: 0
     t.integer "website_id"
     t.string "name"
+    t.integer "position"
   end
 
   create_table "images_elements", force: :cascade do |t|

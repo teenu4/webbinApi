@@ -15,6 +15,7 @@ class Image < ApplicationRecord
   accepts_nested_attributes_for :images_patterns, allow_destroy: true
 
   PLATFORMS = %w[mobile desktop tablet].freeze
+  DEFAULT_URL = Rails.application.credentials[:api_root] + '/placeholder.png'.freeze
 
   def preview_url
     if desktop_attached && !preview_file.attached?
@@ -23,9 +24,20 @@ class Image < ApplicationRecord
     elsif preview_file.attached?
       preview_file.service_url
     else
-      # TODO: add default url
-      nil
+      DEFAULT_URL
     end
+  end
+
+  def mobile_url
+    mobile_attached ? mobile_file.service_url : DEFAULT_URL
+  end
+
+  def desktop_url
+    desktop_attached ? desktop_file.service_url : DEFAULT_URL
+  end
+
+  def tablet_url
+    tablet_attached ? tablet_file.service_url : DEFAULT_URL
   end
 
   def set_platforms_info
