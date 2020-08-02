@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_155649) do
+ActiveRecord::Schema.define(version: 2020_08_02_155104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_08_01_155649) do
     t.bigint "flow_id"
     t.bigint "image_id"
     t.datetime "created_at", null: false
+    t.integer "position"
     t.index ["flow_id", "image_id"], name: "index_flows_images_on_flow_id_and_image_id"
     t.index ["flow_id"], name: "index_flows_images_on_flow_id"
     t.index ["image_id"], name: "index_flows_images_on_image_id"
@@ -106,6 +107,8 @@ ActiveRecord::Schema.define(version: 2020_08_01_155649) do
     t.integer "website_id"
     t.string "name"
     t.integer "position"
+    t.datetime "end_date"
+    t.integer "next_image_id"
   end
 
   create_table "images_elements", force: :cascade do |t|

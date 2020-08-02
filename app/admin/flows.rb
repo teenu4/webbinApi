@@ -1,7 +1,7 @@
 ActiveAdmin.register Flow do
 
   permit_params :name,
-                flows_images_attributes: %i[id flow_id image_id _destroy]
+                flows_images_attributes: %i[id flow_id image_id position _destroy]
 
   index do
     selectable_column
@@ -27,10 +27,10 @@ ActiveAdmin.register Flow do
     end
 
     f.inputs 'Flow Steps' do
-      f.has_many :flows_images,
+      f.has_many :flows_images, sortable: :position, sortable_start: 1,
                  allow_destroy: true do |s|
         s.input :flow_id, as: :hidden
-        s.input :image, as: :select, collection: Image.all.map{|i| [i.active_admin_title,i.id]}
+        s.input :image, as: :select, collection: Image.all.map { |i| [i.active_admin_title, i.id] }
       end
     end
     actions
