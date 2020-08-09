@@ -1,0 +1,38 @@
+module Images
+  class NewVersionCreator
+    include Interactor
+
+    def call
+      init
+      setup_lifespan
+      check_for_older_versions
+    end
+
+    private
+
+    def init
+      @old_image = Image.find(context.image.prev_image_id)
+      @new_image = context.image
+    end
+
+    # def duplicate_records(type)
+    #   type.where(image_id: @old_image.id).each do |old_obj|
+    #     new_obj = old_obj.dup
+    #     old_obj
+    #   end
+    # end
+
+    def setup_lifespan
+      @old_image.end_date ||= @new_image.created_at
+      @old_image.latest_image_id = @new_image.id
+      @new_image.position = @old_image.position
+      @old_image.save!
+      @new_image.save!
+    end
+
+    def check_for_older_versions
+      Image.where(latest_image_id: @old_image.id)
+           .update_all(latest_image_id: @new_image.id)
+    end
+  end
+end

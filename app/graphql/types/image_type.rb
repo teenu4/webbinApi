@@ -13,6 +13,7 @@ module Types
     field :mobile_url, String, null: true
     field :desktop_url, String, null: true
     field :tablet_url, String, null: true
+    field :image_versions, [Types::ImageVersionType], null: true
 
     def preview_url
       object.preview_url
@@ -28,6 +29,10 @@ module Types
 
     def tablet_url
       object.tablet_url
+    end
+
+    def image_versions
+      object.versions
     end
   end
 end

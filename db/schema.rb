@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_02_155104) do
+ActiveRecord::Schema.define(version: 2020_08_06_094851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,7 +108,8 @@ ActiveRecord::Schema.define(version: 2020_08_02_155104) do
     t.string "name"
     t.integer "position"
     t.datetime "end_date"
-    t.integer "next_image_id"
+    t.integer "latest_image_id"
+    t.integer "prev_image_id"
   end
 
   create_table "images_elements", force: :cascade do |t|

@@ -28,8 +28,15 @@ module Images
     end
 
     def attach_image
-      context.image.preview_file.attach(io: File.open(@file_names[1]),
-                                        filename: @file_names[0])
+      attached = false
+      @file_names.each do |name|
+        next unless File.exists? name
+
+        context.image.preview_file.attach(io: File.open(name),
+                                          filename: name)
+        attached = true
+      end
+      raise "Can't find file!" unless attached
     end
 
     def close_file
