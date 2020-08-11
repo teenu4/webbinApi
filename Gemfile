@@ -53,3 +53,8 @@ gem 'image_processing'
 gem 'mini_magick'
 # advanced service objects
 gem 'interactor', '~> 3.0'
+# paging, filter, order for graphql
+gem 'graphql-query-resolver'
+gem 'search_object'
+gem 'search_object_graphql'
+gem 'graphql-batch'

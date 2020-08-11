@@ -1,6 +1,7 @@
 class Image < ApplicationRecord
   belongs_to :website
   has_many :flows_images
+  has_many :flows, through: :flows_images
   has_many :images_elements
   has_many :elements, through: :images_elements
   has_many :images_patterns

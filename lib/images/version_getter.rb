@@ -31,7 +31,7 @@ module Images
            .where(prev_image_id: @image.id)
            .or(Image.select(SELECT_COLUMNS)
                      .where(latest_image_id: @image.id))
-           .order(:created_at).to_sql
+           .order(:created_at)
     end
   end
 end
