@@ -58,3 +58,6 @@ gem 'graphql-query-resolver'
 gem 'search_object'
 gem 'search_object_graphql'
 gem 'graphql-batch'
+
+# amazon s3 files
+gem "aws-sdk-s3", require: false
