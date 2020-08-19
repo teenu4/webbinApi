@@ -1,15 +1,15 @@
 module Types
   class ImageType < BaseObject
     field :id, ID, null: false
-    field :name, String, null: true
+    field :internal_name, String, null: true
+    field :display_name, String, null: true
     field :mobile_attached, Boolean, null: true
     field :desktop_attached, Boolean, null: true
     field :tabled_attached, Boolean, null: true
     field :platforms_count, Integer, null: true
     field :elements_count, Integer, null: true
-    field :position, Integer, null: true
     field :latest_image_id, Integer, null: true
-    field :website, Types::ImageWebsiteType, null: true
+    field :website, Types::LightWebsiteType, null: true
     field :elements, [Types::ElementType], null: true
     field :patterns, [Types::PatternType], null: true
     field :flows, [Types::FlowType], null: true

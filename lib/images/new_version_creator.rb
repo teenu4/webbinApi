@@ -4,6 +4,7 @@ module Images
 
     def call
       init
+      update_flows
       setup_lifespan
       check_for_older_versions
     end
@@ -15,17 +16,17 @@ module Images
       @new_image = context.image
     end
 
-    # def duplicate_records(type)
-    #   type.where(image_id: @old_image.id).each do |old_obj|
-    #     new_obj = old_obj.dup
-    #     old_obj
-    #   end
-    # end
+    # if old image has flows - replace it with new
+    # also checking latest_image_id if new version has multiple images
+    # to put into flow last image
+    def update_flows
+      old_id = @old_image.latest_image_id || @old_image.id
+      FlowsImage.where(image_id: old_id).update_all(image_id: @new_image.id)
+    end
 
     def setup_lifespan
       @old_image.end_date ||= @new_image.created_at
       @old_image.latest_image_id = @new_image.id
-      @new_image.position = @old_image.position
       @old_image.save!
       @new_image.save!
     end

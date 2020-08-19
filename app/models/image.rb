@@ -7,7 +7,7 @@ class Image < ApplicationRecord
   has_many :images_patterns
   has_many :patterns, through: :images_patterns
   before_save :set_platforms_info
-  after_create :check_for_versions
+  after_create :after_create
   has_one_attached :desktop_file
   has_one_attached :mobile_file
   has_one_attached :tablet_file
@@ -42,18 +42,19 @@ class Image < ApplicationRecord
     tablet_attached ? tablet_file.service_url : DEFAULT_URL
   end
 
-  def active_admin_title
-    "#{website.name} > #{name}"
-  end
-
   def versions
     Images::VersionGetter.call(image: self).versions
   end
 
   private
 
-  def check_for_versions
+  def after_create
     Images::NewVersionCreator.call(image: self) if prev_image_id
+    update_website_last_update
+  end
+
+  def update_website_last_update
+    website.update(last_update: created_at)
   end
 
   def set_platforms_info

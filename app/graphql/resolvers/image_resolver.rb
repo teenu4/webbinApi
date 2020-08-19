@@ -19,12 +19,11 @@ module Resolvers
     end
 
     class ImageOrderBy < ::Types::BaseEnum
-      value 'createdAt_ASC'
       value 'createdAt_DESC'
-      value 'position_ASC'
+      value 'internalName_ASC'
     end
 
-    option :filter, type: ImageFilter, with: :apply_filter
+    option :filter, type: ImageFilter, with: :apply_filter, default: {}
     option :first, type: types.Int, with: :apply_first
     option :skip, type: types.Int, with: :apply_skip
     option :order_by, type: ImageOrderBy, default: 'createdAt_DESC'
@@ -87,16 +86,12 @@ module Resolvers
       scope.offset(value)
     end
 
-    def apply_order_by_with_created_at_asc(scope)
-      scope.order('created_at ASC')
-    end
-
     def apply_order_by_with_created_at_desc(scope)
       scope.order('created_at DESC')
     end
 
-    def apply_order_by_with_position_asc(scope)
-      scope.order('position ASC, id ASC')
+    def apply_order_by_with_internal_name_asc(scope)
+      scope.order('internal_name ASC, id ASC')
     end
 
     def fetch_results

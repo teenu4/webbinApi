@@ -1,6 +1,6 @@
 # i can't use WebsiteType from ImageType :(
 module Types
-  class ImageWebsiteType < Types::BaseObject
+  class LightWebsiteType < Types::BaseObject
     field :id, ID, null: false
     field :name, String, null: true
     field :description, String, null: true

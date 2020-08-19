@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_094851) do
+ActiveRecord::Schema.define(version: 2020_08_17_193708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 2020_08_06_094851) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "images_count", default: 0
+    t.bigint "website_id"
+    t.index ["website_id"], name: "index_flows_on_website_id"
   end
 
   create_table "flows_images", force: :cascade do |t|
@@ -105,11 +107,11 @@ ActiveRecord::Schema.define(version: 2020_08_06_094851) do
     t.integer "flows_count", default: 0
     t.integer "patterns_count", default: 0
     t.integer "website_id"
-    t.string "name"
-    t.integer "position"
+    t.string "display_name"
     t.datetime "end_date"
     t.integer "latest_image_id"
     t.integer "prev_image_id"
+    t.string "internal_name"
   end
 
   create_table "images_elements", force: :cascade do |t|
@@ -143,6 +145,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_094851) do
     t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "last_update"
     t.index ["category_id"], name: "index_websites_on_category_id"
   end
 
