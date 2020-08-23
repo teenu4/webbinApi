@@ -6,8 +6,8 @@ class Image < ApplicationRecord
   has_many :elements, through: :images_elements
   has_many :images_patterns
   has_many :patterns, through: :images_patterns
-  before_save :set_platforms_info
-  after_create :after_create
+  before_save :before_save_callback
+  after_create :after_create_callback
   has_one_attached :desktop_file
   has_one_attached :mobile_file
   has_one_attached :tablet_file
@@ -48,7 +48,7 @@ class Image < ApplicationRecord
 
   private
 
-  def after_create
+  def after_create_callback
     Images::NewVersionCreator.call(image: self) if prev_image_id
     update_website_last_update
   end
@@ -57,12 +57,17 @@ class Image < ApplicationRecord
     website.update(last_update: created_at)
   end
 
-  def set_platforms_info
+  def before_save_callback
     # deleting old preview file since new file is uploaded
     if desktop_file.attached? && preview_file.attached? && desktop_file.changed_for_autosave?
       preview_file.purge
     end
     setup_cached_fields
+    delete_flows_images if end_date_changed? && !end_date.nil?
+  end
+
+  def delete_flows_images
+    FlowsImage.where(image_id: id).destroy_all
   end
 
   def setup_cached_fields

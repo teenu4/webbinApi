@@ -7,7 +7,11 @@ module Types
     add_field GraphQL::Types::Relay::NodeField
     add_field GraphQL::Types::Relay::NodesField
 
-    field :elements, [Types::ElementType], null: false
+    field :all_elements, [Types::ElementType], null: false
+
+    field :all_patterns, [Types::PatternType], null: false
+
+    field :all_categories, [Types::CategoryType], null: false
 
     # field :images, [Types::ImageType], null: false
     field :all_images, resolver: Resolvers::ImageResolver
@@ -16,11 +20,13 @@ module Types
       argument :id, ID, required: true
     end
 
-    field :websites, [Types::WebsiteType], null: false
+    field :all_websites, resolver: Resolvers::WebsiteResolver
 
     field :website, Types::WebsiteType, null: false do
       argument :id, ID, required: true
     end
+
+    field :all_flows, resolver: Resolvers::FlowResolver
 
     def websites
        Website.all.order(created_at: :desc)
@@ -31,8 +37,16 @@ module Types
       Loaders::RecordLoader.for(Website).load(id)
     end
 
-    def elements
+    def all_elements
       Element.all
+    end
+
+    def all_patterns
+      Pattern.all
+    end
+
+    def all_categories
+      Category.all
     end
 
     def image(id:)
