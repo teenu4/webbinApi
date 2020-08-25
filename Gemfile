@@ -53,11 +53,12 @@ gem 'image_processing'
 gem 'mini_magick'
 # advanced service objects
 gem 'interactor', '~> 3.0'
-# paging, filter, order for graphql
+# paging, filter, order, n+1 optimization for graphql
 gem 'graphql-query-resolver'
 gem 'search_object'
 gem 'search_object_graphql'
 gem 'graphql-batch'
+gem 'graphql-preload', git: 'https://github.com/Envek/graphql-preload'
 
 # amazon s3 files
 gem "aws-sdk-s3", require: false

@@ -5,6 +5,7 @@ class WebbinApiSchema < GraphQL::Schema
 
   # TODO: try to use this and optimize queries
   use GraphQL::Batch
+  enable_preloading
 
   def self.resolve_type(_type, object, _ctx)
     type_class = "::Types::#{object.class}Type".safe_constantize

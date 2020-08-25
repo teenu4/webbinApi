@@ -9,31 +9,31 @@ module Types
     field :platforms_count, Integer, null: true
     field :elements_count, Integer, null: true
     field :latest_image_id, Integer, null: true
-    field :website, Types::LightWebsiteType, null: true
-    field :elements, [Types::ElementType], null: true
-    field :patterns, [Types::PatternType], null: true
-    field :flows, [Types::FlowType], null: true
-    field :preview_url, String, null: true
-    field :mobile_url, String, null: true
-    field :desktop_url, String, null: true
-    field :tablet_url, String, null: true
+    field :website, Types::LightWebsiteType, null: true do
+      preload :website
+    end
+    field :elements, [Types::ElementType], null: true do
+      preload :elements
+    end
+    field :patterns, [Types::PatternType], null: true do
+      preload :patterns
+    end
+    field :flows, [Types::FlowType], null: true do
+      preload :flows
+    end
+    field :preview_url, String, null: true, resolve: -> (obj, args, context) {
+      Loaders::ActiveStorageLoader.attachment_url(obj, :Image, :preview_file)
+    }
+    field :mobile_url, String, null: true, resolve: -> (obj, args, context) {
+      Loaders::ActiveStorageLoader.attachment_url(obj, :Image, :mobile_file)
+    }
+    field :desktop_url, String, null: true, resolve: -> (obj, args, context) {
+      Loaders::ActiveStorageLoader.attachment_url(obj, :Image, :desktop_file)
+    }
+    field :tablet_url, String, null: true, resolve: -> (obj, args, context) {
+      Loaders::ActiveStorageLoader.attachment_url(obj, :Image, :tablet_file)
+    }
     field :image_versions, [Types::ImageVersionType], null: true
-
-    def preview_url
-      object.preview_url
-    end
-
-    def mobile_url
-      object.mobile_url
-    end
-
-    def desktop_url
-      object.desktop_url
-    end
-
-    def tablet_url
-      object.tablet_url
-    end
 
     def image_versions
       object.versions

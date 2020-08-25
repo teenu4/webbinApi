@@ -7,15 +7,14 @@ module Types
     field :images, [Types::ImageType], null: true,
                                        resolver: Resolvers::ImageResolver
     field :last_update, String, null: true
-    field :logo_url, String, null: true
+    field :logo_url, String, null: true, resolve: -> (obj, args, context) {
+      Loaders::ActiveStorageLoader.attachment_url(obj, :Website, :logo)
+    }
     field :label, String, null: true
 
     def label
       object.label
     end
 
-    def logo_url
-      object.logo_url
-    end
   end
 end
