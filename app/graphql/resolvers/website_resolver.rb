@@ -3,6 +3,7 @@ require 'graphql/query_resolver'
 module Resolvers
   class WebsiteResolver
     include SearchObject.module(:graphql)
+    include CommonMethods
 
     scope { Website.all }
 
@@ -21,20 +22,13 @@ module Resolvers
     option :first, type: types.Int, with: :apply_first
     option :skip, type: types.Int, with: :apply_skip
     option :order_by, type: WebsiteOrderBy, default: 'lastUpdate_DESC'
+    option :count, type: Boolean, with: :apply_count
 
     def apply_filter(scope, value)
       if value[:category_id]
         scope = scope.where(category_id: value[:category_id])
       end
       scope.distinct
-    end
-
-    def apply_first(scope, value)
-      scope.limit(value)
-    end
-
-    def apply_skip(scope, value)
-      scope.offset(value)
     end
 
     def apply_order_by_with_last_update_desc(scope)

@@ -3,15 +3,13 @@ require 'graphql/query_resolver'
 module Resolvers
   class ImageResolver
     include SearchObject.module(:graphql)
+    include CommonMethods
 
     scope { Image.all }
 
     type [Types::ImageType]
 
     class ImageFilter < ::Types::BaseInputObject
-      #argument :OR, [self], required: false
-      #argument :description_contains, String, required: false
-      #argument :url_contains, String, required: false
       argument :website_id, [ID], required: false
       argument :pattern_id, [ID], required: false
       argument :element_id, [ID], required: false
@@ -27,17 +25,13 @@ module Resolvers
     option :first, type: types.Int, with: :apply_first
     option :skip, type: types.Int, with: :apply_skip
     option :order_by, type: ImageOrderBy, default: 'createdAt_DESC'
+    option :count, type: Boolean, with: :apply_count
 
     def apply_filter(scope, value)
-      # branches = normalize_filters(value).reduce { |a, b| a.or(b) }
-      # scope.merge branches
-      #puts value.to_h
-      #scope.where(value.to_h)
       process_filters(scope, value)
     end
 
     def process_filters(scope, value)
-
       if value[:pattern_id]
         scope = scope.joins(:images_patterns).merge(ImagesPattern.where(pattern_id: value[:pattern_id]))
       end
@@ -58,32 +52,6 @@ module Resolvers
         scope = scope.where(filter_hash)
       end
       scope
-    end
-
-    # def normalize_filters(value, branches = [])
-    #   scope = Link.all
-    #   if value[:description_contains]
-    #     scope = scope.where('description LIKE ?', "%#{value[:description_contains]}%")
-    #   end
-    #   if value[:url_contains]
-    #     scope = scope.where('url LIKE ?', "%#{value[:url_contains]}%")
-    #   end
-    #
-    #   branches << scope
-    #
-    #   if value[:OR].present?
-    #     value[:OR].reduce(branches) { |s, v| normalize_filters(v, s) }
-    #   end
-    #
-    #   branches
-    # end
-
-    def apply_first(scope, value)
-      scope.limit(value)
-    end
-
-    def apply_skip(scope, value)
-      scope.offset(value)
     end
 
     def apply_order_by_with_created_at_desc(scope)
