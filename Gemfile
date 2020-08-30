@@ -59,6 +59,9 @@ gem 'search_object'
 gem 'search_object_graphql'
 gem 'graphql-batch'
 gem 'graphql-preload', git: 'https://github.com/Envek/graphql-preload'
-
 # amazon s3 files
 gem "aws-sdk-s3", require: false
+# jobs
+gem 'sidekiq'
+# slack notifications
+gem 'slack-notifier'

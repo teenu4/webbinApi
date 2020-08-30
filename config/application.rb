@@ -37,6 +37,9 @@ module WebbinApi
     config.autoload_paths << Rails.root.join("lib")
     config.eager_load_paths << Rails.root.join("lib")
 
+    config.active_job.queue_adapter = :sidekiq
+
+
     # CORS config to allow ajax
     config.middleware.insert_before 0, Rack::Cors do
       allow do
