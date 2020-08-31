@@ -5,7 +5,7 @@ class Website < ApplicationRecord
   accepts_nested_attributes_for :images, allow_destroy: true
 
   DEFAULT_URL = "#{ENV['API_ROOT']}/placeholder.png".freeze
-  UPDATED_INTERVAL = 7
+  UPDATED_INTERVAL = 7.days
 
   def logo_url
     if logo.attached?
@@ -17,6 +17,6 @@ class Website < ApplicationRecord
 
   # use this for 'updated' status
   def label
-    'UPDATED' if last_update && (last_update + UPDATED_INTERVAL < DateTime.now)
+    'UPDATED' if last_update && (last_update + UPDATED_INTERVAL > DateTime.now)
   end
 end
