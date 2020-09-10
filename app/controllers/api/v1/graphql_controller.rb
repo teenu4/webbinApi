@@ -12,8 +12,9 @@ module Api
         operation_name = params[:operationName]
         context = {
             # Query context goes here, for example:
-            # current_user: current_user,
+            current_user: current_user,
         }
+        puts context[:current_user].inspect
         result = WebbinApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
         render json: result
       rescue => e

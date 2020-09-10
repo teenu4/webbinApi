@@ -44,8 +44,6 @@ gem 'pg'
 gem 'graphql'
 # cors to use non-rails clients
 gem 'rack-cors'
-# users
-gem 'devise'
 # ActiveAdmin
 gem 'activeadmin'
 # image editing
@@ -62,3 +60,8 @@ gem 'graphql-preload', git: 'https://github.com/Envek/graphql-preload'
 
 # amazon s3 files
 gem "aws-sdk-s3", require: false
+
+#auth
+gem 'devise', '4.7.2'
+gem 'devise-jwt', '0.8.0'
+gem 'omniauth-google-oauth2'

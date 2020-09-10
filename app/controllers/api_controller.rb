@@ -1,4 +1,6 @@
 class ApiController < ActionController::API
+  include ActionController::MimeResponds
+  respond_to :json
   before_action :set_host_for_local_storage
 
   private
