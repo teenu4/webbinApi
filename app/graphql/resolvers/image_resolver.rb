@@ -13,6 +13,7 @@ module Resolvers
       argument :website_id, [ID], required: false
       argument :pattern_id, [ID], required: false
       argument :element_id, [ID], required: false
+      argument :category_id, [ID], required: false
       argument :flow_id, [ID], required: false
     end
 
@@ -40,6 +41,9 @@ module Resolvers
       end
       if value[:flow_id]
         scope = scope.joins(:flows_images).merge(FlowsImage.where(flow_id: value[:flow_id]))
+      end
+      if value[:category_id]
+        scope = scope.joins(:website).merge(Website.where(category_id: value[:category_id]))
       end
       scope = filter_by_website(scope, value)
       scope.distinct

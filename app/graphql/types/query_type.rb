@@ -7,11 +7,20 @@ module Types
     add_field GraphQL::Types::Relay::NodeField
     add_field GraphQL::Types::Relay::NodesField
 
-    field :all_elements, [Types::ElementType], null: false
+    field :all_elements, [Types::ElementType], null: false do
+      argument :filter, Filters::ElementFilter, required: true
+      argument :type, String, required: false, default_value: 'Images'
+    end
 
-    field :all_patterns, [Types::PatternType], null: false
+    field :all_patterns, [Types::PatternType], null: false do
+      argument :filter, Filters::PatternFilter, required: true
+      argument :type, String, required: false, default_value: 'Images'
+    end
 
-    field :all_categories, [Types::CategoryType], null: false
+    field :all_categories, [Types::CategoryType], null: false do
+      argument :filter, Filters::CategoryFilter, required: true
+      argument :type, String, required: false, default_value: 'Images'
+    end
 
     field :all_images, resolver: Resolvers::ImageResolver
 
@@ -34,22 +43,35 @@ module Types
     field :flows_count, CountType, resolver: Resolvers::FlowResolver
 
     def websites
-       Website.all.order(created_at: :desc)
+      Website.all.order(created_at: :desc)
     end
 
     def website(id:)
       Loaders::RecordLoader.for(Website).load(id)
     end
 
-    def all_elements
+    def element(id:)
+      Loaders::RecordLoader.for(Element).load(id)
+    end
+
+    def all_elements(filter:, type:)
+      context[:counts] = Service::FilterCountFetcher.call(resource_type: type,
+                                                          filter_type: 'element_id',
+                                                          filter: filter).counts
       Element.all
     end
 
-    def all_patterns
+    def all_patterns(filter:, type:)
+      context[:counts] = Service::FilterCountFetcher.call(resource_type: type,
+                                                          filter_type: 'pattern_id',
+                                                          filter: filter).counts
       Pattern.all
     end
 
-    def all_categories
+    def all_categories(filter:, type:)
+      context[:counts] = Service::FilterCountFetcher.call(resource_type: type,
+                                                          filter_type: 'category_id',
+                                                          filter: filter).counts
       Category.all
     end
 
