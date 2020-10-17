@@ -7,7 +7,8 @@ module Service
             pattern_id: { column: 'ip.pattern_id', joins: 'left join images_patterns ip on i.id = ip.image_id' },
             element_id: { column: 'ie.element_id', joins: 'left join images_elements ie on i.id = ie.image_id' },
             category_id: { column: 'c.id', joins: 'left join websites w on i.website_id = w.id
-         left join categories c on w.category_id = c.id' }
+         left join categories c on w.category_id = c.id' },
+            website_id: { column: 'website_id' }
         }
     }
 
