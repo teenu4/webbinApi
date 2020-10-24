@@ -9,6 +9,9 @@ module Service
             category_id: { column: 'c.id', joins: 'left join websites w on i.website_id = w.id
          left join categories c on w.category_id = c.id' },
             website_id: { column: 'website_id' }
+        },
+        'Websites' => {
+            category_id: { column: 'website_id' }
         }
     }
 
